@@ -13,9 +13,21 @@ This code contains 3 parts:
 
 **ModelNet10-SO3** 
 
+#### Example more rotated renderings. ![](readme/ModelNet10-SO3_more.png)
+
+
+#### Example of uniformly sampled 20 Views on SO3. 
+![](readme/ModelNet10-SO3_20V.png)
+
 - In lmdb format, and to be read by `pylibs/lmdb_util/imagedata_lmdb.py`
 - [Download](https://drive.google.com/file/d/17GLZbNTDq8B_MOgrV1TiJPoqcm_oQ_mK/view?usp=sharing) (2.4G)
 
+#### Visualize the dataset.
+
+```
+# Example
+python pylibs/lmdb_util/imagedata_lmdb.py  path/to/ModelNet10-SO3/test_20V.Rawjpg.lmdb
+```
 
 
 ### TODO
