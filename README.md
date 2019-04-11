@@ -13,10 +13,10 @@ This code contains 3 parts:
 
 **ModelNet10-SO3** 
 
-#### Example more rotated renderings. ![](readme/ModelNet10-SO3_more.png)
+#### Rendering examples of rotatations. ![](readme/ModelNet10-SO3_more.png)
 
 
-#### Example of uniformly sampled 20 Views on SO3. 
+#### Example of uniformly sampled on SO3 (20 Views). 
 ![](readme/ModelNet10-SO3_20V.png)
 
 - In lmdb format, and to be read by `pylibs/lmdb_util/imagedata_lmdb.py`
