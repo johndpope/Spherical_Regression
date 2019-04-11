@@ -14,7 +14,7 @@ This code contains 3 parts:
 **ModelNet10-SO3** 
 
 - In lmdb format, and to be read by `pylibs/lmdb_util/imagedata_lmdb.py`
-- [Download](https://drive.google.com/drive/folders/1L2ibFwvYJrVkj8Dsm7WNecyN2llpocbY?usp=sharing)
+- [Download](https://drive.google.com/file/d/17GLZbNTDq8B_MOgrV1TiJPoqcm_oQ_mK/view?usp=sharing) (2.4G)
 
 
 
