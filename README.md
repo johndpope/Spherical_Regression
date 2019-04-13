@@ -6,9 +6,43 @@
 
 This code contains 3 parts:
 
-- **S1.Viewpoint**      [To be cleaned up and released soon]- **S2.Surface_Normal** [To be cleaned up and released soon]- **S3.3D_Rotation**
+- **Viewpoint Estimation**: S1.Viewpoint           [*]- **Surface Normal Estimation**: S2.Surface_Normal [*]- **3D rotation estimation** : S3.3D_Rotation
+
+[*] To be cleaned up and released soon
 
 You can find paper [here](http://arxiv.org/abs/1904.05404).
+
+
+## What is Spherical regression?
+
+<img src="readme/use_case.pdf" alt="use_case" width="400"/>
+
+Many computer vision problems can be converted into a $n$-sphere problem.
+$n$-spheres are naturally closed geometric manifolds defined in the $\mathbb{R}^{(n+1)}$ space.
+Examples are a) viewpoint estimation, b) surface normal estimation, and c) 3D rotation estimation.
+This work proposes a general regression framework that can be applied on all these $n$-sphere problems.
+
+<!-- ![](readme/use_case.pdf)-->
+
+## Why use our $S_{exp}$ regression?
+
+Having gradient constrained and leading to a stable training.
+
+
+<img src="readme/avg_gradient_norm_v3.png" alt="avg_norm" width="600"/> 
+
+Variance of the average gradient norm $||\frac{\partial \mathcal L}{\partial \boldsymbol{O}}||$. Spherical exponentiation $\mathcal{S}_{exp}$ yields lower variance on mini-batch over entire train progress and thus leads to a better performance. 
+
+
+<!-- ![](readme/avg_gradient_norm_v3.png=100x20) -->
+
+- (I)    Direct regression with smooth-L1 loss. It may cause the output to no longer follow unit $\ell_2$ norm.
+- (II)   Regression with $\ell_2$ normalization $\mathcal{S}_{flat}$.
+- (III)  Regression with $\mathcal{S}_{exp}$ (this paper).
+
+
+<img src="readme/so3_results.pdf" alt="avg_norm" align="middle" width="450"/> 
+
 
 ## Dataset:
 
@@ -36,7 +70,7 @@ python pylibs/lmdb_util/imagedata_lmdb.py  path/to/ModelNet10-SO3/test_20V.Rawjp
 there's caffe_models.
 
 
-## Cite
+## Citation
 
 ```
 @INPROCEEDINGS{LiaoCVPR19, 
