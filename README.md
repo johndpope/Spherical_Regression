@@ -11,11 +11,11 @@ This code contains 3 parts:
 [*] To be cleaned up and released soon
 
 You can find paper [here](http://arxiv.org/abs/1904.05404).
-
+ 
 
 ## What is Spherical regression?
 
-<img src="readme/use_case.pdf" alt="use_case" width="400"/>
+<img src="readme/use_case.png" alt="use_case" width="400"/>
 
 Many computer vision problems can be converted into a $n$-sphere problem.
 $n$-spheres are naturally closed geometric manifolds defined in the $\mathbb{R}^{(n+1)}$ space.
@@ -41,7 +41,7 @@ Variance of the average gradient norm $||\frac{\partial \mathcal L}{\partial \bo
 - (III)  Regression with $\mathcal{S}_{exp}$ (this paper).
 
 
-<img src="readme/so3_results.pdf" alt="avg_norm" align="middle" width="450"/> 
+<img src="readme/so3_results.png" alt="so3_results" align="middle" width="450"/> 
 
 
 ## Dataset:
