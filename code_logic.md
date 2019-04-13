@@ -18,16 +18,16 @@ from pytorch_util.libtrain import copy_weights, init_weights_by_filling
 
 
 net_arch2Trunk = dict(
+    # alexnet    = AlexNet_Trunk,
+    # vgg16      = VGG16_Trunk,
     # resnet18   = (ResNet18_Trunk, 512),
-    # alexnet  = AlexNet_Trunk,
-    # vgg16    = VGG16_Trunk,
     # resnet101= ResNet101_Trunk,
     # resnet50 = ResNet50_Trunk,
 )
 
 
 class Base_Net(nn.Module):
-    #
+    
     @staticmethod
     def head_seq(in_dim, out_dim, init_weights=True):
         seq = nn.Sequential(
@@ -68,7 +68,7 @@ class Base_Net(nn.Module):
         # Forward head sequence and compute problem representation
         # (Note: prob can be different from the expected final prediction).
         prob = self.head(x).view(batchsize, self.target_dim)
-
+         
         return prob
 
     def compute_loss(self, prob, gt):
@@ -93,11 +93,8 @@ class Base_Net(nn.Module):
 ### For multi-class and multi-target network
 
 ```
-# [TODO] consider to remove target. 
-# This makes logic complex
-
 class Multi_Class_Reg_Net(nn.Module):
-    #
+    
     @staticmethod
     def head_seq(in_size, reg_n_D, nr_cate=12, nr_fc8=334, init_weights=True):  # in_size=4096
         seq = nn.Sequential(
