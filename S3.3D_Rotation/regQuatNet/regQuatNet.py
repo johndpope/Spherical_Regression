@@ -257,7 +257,7 @@ class reg_Sexp_Net(_BaseReg_Net):
 
     def compute_loss(self, Prob, GT):
         # First get sign label from GT
-        #== Formulate squared value of quaternion
+        #== Formulate absolute value of quaternion
         GT_abs_quat = torch.abs(GT.quat)
         #== Formulate signs label of quaternion
         GT_sign_quat = torch.sign(GT.quat)

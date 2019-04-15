@@ -1,8 +1,77 @@
+## How to make your first S_exp regression?
+
+```
+from itertools import product
+
+
+# Assume you have:
+# [1] Ground truth spherical targets:                 GT       (batch_size x target_dim)
+# [2] Network output for absolute value problem:      prob_abs (batch_size x target_dim)
+# [3] Network output for sign classification problem: prob_sgc (batch_size x 2^target_dim)
+
+#-------------------------------------------------------------------------------#
+#---- Build up the signs combination to the classification label mapping. ------#
+#-------------------------------------------------------------------------------#
+# Here we show the example for quaternion q = (a,b,c,d). 
+# Since we force 'a' to be positive, it results in only b,c,d need sign prediction.
+dim_need_sign = 3
+# Sign combination for (b,c,d)
+_signs = list( product(*( [(-1,1)]*dim_need_sign )) ) # [(-1, -1, -1), (-1, -1, 1), ..., (1, 1, 1)], with len=8
+# Sign combination for (a,b,c,d)
+signs = [(1,)+x for x in _signs]                      # [(1, -1, -1, -1), (1, -1, -1, 1), ..., (1, 1, 1, 1)], with len=8
+signs2label = odict(zip(self.signs, range(len(self.signs))))
+label2signs = torch.FloatTensor(self.signs)  # make it as a Variable
+
+
+
+#-------------------------------------------------------------------------------#
+#------------------ Formulate absolute value of quaternion ---------------------#
+#-------------------------------------------------------------------------------#
+GT_abs = torch.abs(GT)
+
+#-------------------------------------------------------------------------------#
+#------------------- Formulate signs label of quaternion -----------------------#
+#-------------------------------------------------------------------------------#
+GT_sign = torch.sign(GT)
+GT_sign[GT_sign==0] = 1  # make sign of '0' as 1
+signs_tuples = [tuple(x) for x in GT_sign.data.cpu().numpy().astype(np.int32).tolist()]
+# signs label for classification
+GT_sgc  = torch.LongTensor([signs2label[signs_tuple] for signs_tuple in signs_tuples]) 
+
+
+#-------------------------------------------------------------------------------#
+#------------------------- Compute losses here     -----------------------------#
+#-------------------------------------------------------------------------------#
+loss_abs = cross_entropy_loss(prob_abs, GT_abs)
+loss_sgc = neg_dot_prod_loss (prob_sgc, GT_sgc)  
+
+
+#-------------------------------------------------------------------------------#
+#-------------------- Make prediction at inference -----------------------------#
+#-------------------------------------------------------------------------------#
+x_abs     = prob_abs
+batchsize = x_abs.size(0)
+#
+_, sign_ind  = prob_sgc.topk(maxk, 1, True, True)    # take argmax
+item_inds    = torch.range(batchsize)
+_label_shape = self.label2signs.size()
+x_sign = self.label2signs.expand(batchsize,*_label_shape)[item_inds, sign_ind]
+
+# combine absolute values with the signs to make final prediction.
+pred_quat = x_abs * x_sign
+
+```
+
+
+<br/>
+<br/>
+<br/>
+## Pytorch network module design
 
 We make every network module to be easily extentable:
 
 
-### For single target (and class-agnostic)
+### For single target (or a.k.a class-agnostic)
 
 ```
 # coding: utf8
